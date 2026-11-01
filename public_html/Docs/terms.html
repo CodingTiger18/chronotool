@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terms and Conditions | OmniTime</title>
+  <meta name="description" content="Terms of Service and Conditions for OmniTime (ChronoTools.online).">
+  <link rel="canonical" href="https://ChronoTools.online/Docs/terms.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2338bdf8'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"> -->
+  <link href="https://googleapis.com" rel="stylesheet">
+  <script>
+    var t = null;
+    try { t = localStorage.getItem("ot_theme"); } catch (e) {}
+    document.documentElement.classList.toggle("dark", t === "dark" || (t !== "light" && matchMedia("(prefers-color-scheme: dark)").matches));
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #f1f5f9;
+      --fg: #0f172a;
+      --mut: #64748b;
+      --line: rgba(100, 116, 139, 0.28);
+      --card: rgba(255, 255, 255, 0.85);
+      --acc: #0ea5e9;
+      --alert-bg: rgba(239, 68, 68, 0.08);
+      --alert-border: #ef4444;
+    }
+    .dark {
+      --bg: #020617;
+      --fg: #f1f5f9;
+      --mut: #94a3b8;
+      --line: rgba(148, 163, 184, 0.2);
+      --card: rgba(15, 23, 42, 0.65);
+      --alert-bg: rgba(239, 68, 68, 0.15);
+      --alert-border: #f87171;
+      color-scheme: dark;
+    }
+    body {
+      margin: 0;
+      font: 15px/1.65 Inter, system-ui, -apple-system, sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+    }
+    header, main, footer {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 16px 20px;
+    }
+    header { padding-top: 24px; }
+    header a {
+      color: var(--acc);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    h1 {
+      font-size: 24px;
+      line-height: 1.25;
+      margin: 14px 0 4px;
+      font-weight: 700;
+    }
+    .upd {
+      color: var(--mut);
+      font-size: 13px;
+      margin: 0 0 16px;
+    }
+    h2 {
+      font-size: 16px;
+      margin: 24px 0 6px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 4px;
+    }
+    p, ul { margin: 0 0 12px; }
+    ul { padding-left: 20px; }
+    li { margin: 5px 0; }
+    .alert-box {
+      background: var(--alert-bg);
+      border-left: 4px solid var(--alert-border);
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .alert-box b { color: var(--alert-border); }
+    footer {
+      color: var(--mut);
+      font-size: 13px;
+      border-top: 1px dashed var(--line);
+      margin-top: 32px;
+      padding-top: 18px;
+      text-align: center;
+    }
+    .ql-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 10px;
+      line-height: 1.6;
+    }
+    .ql-links a { color: inherit; text-decoration: none; }
+    .ql-links a:hover { color: var(--acc); text-decoration: underline; }
+    .ql-links .sep { color: var(--line); user-select: none; }
+    .ql-copy { margin-top: 10px; font-size: 11px; color: var(--mut); }
+    main a { color: var(--acc); text-decoration: none; }
+    main a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../index.html">← Back to OmniTime</a>
+  </header>
+
+  <main>
+    <h1>TERMS AND CONDITIONS</h1>
+
+    <div class="alert-box" id="disclaimer">
+      <b>DISCLAIMER:</b> OmniTime is a free online tool for general scheduling and timezone reference. <b>Do not rely on this tool for mission-critical, flight, medical, or financial deadlines.</b> Always verify critical international meeting or travel times with official airline or host confirmations.
+    </div>
+
+    <h2>1. About the Service</h2>
+    <p>OmniTime provides a visual world clock and meeting scheduler. All time calculations run directly in your browser using standard timezone data. Your personal selections (such as pinned cities, 12h/24h mode, and theme) are saved only on your device.</p>
+
+    <h2>2. Permitted Use</h2>
+    <p>You may use OmniTime freely for personal or business reference. You agree not to abuse the website, deploy automated scraping bots, or attempt to disrupt the service.</p>
+
+    <h2>3. Accuracy &amp; Warranty</h2>
+    <p>OmniTime is provided on an <b>"as is"</b> and <b>"as available"</b> basis without warranties of any kind. While we strive to provide accurate timezone data, international daylight saving rules change frequently, and display times may be affected by your device's system clock settings.</p>
+
+    <h2>4. Limitation of Liability</h2>
+    <p>The developers and site owners will not be liable for any direct or indirect damages, losses, or inconveniences (such as missed meetings, flights, or lost business opportunities) resulting from the use of or inability to use this site.</p>
+
+    <h2>5. Data Attribution</h2>
+    <ul>
+      <li><b>GeoNames:</b> City geographic coordinates, administrative regions, and population data are provided under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0 License</a>.</li>
+      <li><b>IANA Time Zone Database:</b> Timezone rules and names are maintained in the public domain.</li>
+    </ul>
+
+    <h2>6. Advertisements</h2>
+    <p>We display third-party advertisements (such as Google AdSense) to support and keep this service free. Third-party advertising vendors use cookies to serve ads based on web visits, as detailed in our <a href="Privacy.html">Privacy Policy</a>.</p>
+
+    <h2>7. Contact</h2>
+    <p>For questions or feedback, please contact email <a href="mailto:support@ChronoTools.online">support@ChronoTools.online</a>.</p>
+  </main>
+
+  <footer>
+    <div class="ql-links">
+      <a href="terms.html">Terms of Service</a><span class="sep">|</span>
+      <a href="Privacy.html">Privacy Policy</a><span class="sep">|</span>
+      <!-- <a href="terms.html#disclaimer">Disclaimer</a><span class="sep">|</span> -->
+      <!-- <a href="contact.html">Contact Us</a> -->
+    </div>
+    <div class="ql-copy">© 2026 OmniTime (ChronoTools.online). All rights reserved. Time calculations provided "AS IS" without warranty.</div>
+  </footer>
+</body>
+</html>

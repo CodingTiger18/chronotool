@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>var t=null;try{t=localStorage.getItem("ot_theme")}catch(e){}document.documentElement.classList.toggle("dark",t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches))</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OmniTime – World Time Zone Converter and Meeting Planner</title>
+<meta name="description" content="Compare time zones side by side and find a meeting time that works across cities worldwide. Free, fast, no sign-up.">
+<link rel="canonical" href="https://ChronoTools.online/">
+<link rel="preload" href="cities15000.json" as="fetch" crossorigin="anonymous">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2338bdf8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Google Consent Mode v2 & Google-Certified CMP Integration Hook -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  'ad_storage': 'denied',
+  'ad_user_data': 'denied',
+  'ad_personalization': 'denied',
+  'analytics_storage': 'denied',
+  'wait_for_update': 500
+});
+</script>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#f1f5f9;--fg:#0f172a;--mut:#64748b;--card:rgba(255,255,255,.78);--line:rgba(100,116,139,.28);--lab:#fff;--acc:#0ea5e9}
+.dark{--bg:#020617;--fg:#f1f5f9;--mut:#94a3b8;--card:rgba(15,23,42,.62);--line:rgba(148,163,184,.2);--lab:#0f172a;color-scheme:dark}
+body{margin:0;font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--fg);background:radial-gradient(900px 420px at 12% -8%,rgba(56,189,248,.16),transparent),radial-gradient(800px 420px at 100% 0,rgba(167,139,250,.14),transparent),var(--bg);background-attachment:fixed;transition:background-color .2s}
+.hidden{display:none!important}
+.ad{display:flex;align-items:center;justify-content:center;margin:12px auto;max-width:calc(100% - 24px);border-radius:10px;background:rgba(100,116,139,.09);color:var(--mut);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.wrap{max-width:1280px;margin:0 auto;padding:0 12px;display:flex;gap:16px}
+aside{display:none;width:300px;flex:none}aside>div{position:sticky;top:12px}
+@media(min-width:1024px){aside{display:block}}
+main{flex:1;min-width:0}
+.brand-banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin:8px 0 16px;padding:16px 20px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(56,189,248,.1) 0%,rgba(167,139,250,.08) 50%,var(--card) 100%);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 8px 30px -4px rgba(0,0,0,.04)}
+.brand-left{display:flex;align-items:center;gap:14px}
+.brand-icon{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,rgba(56,189,248,.18),rgba(167,139,250,.18));border:1px solid rgba(56,189,248,.25);box-shadow:0 4px 14px rgba(56,189,248,.15);flex-shrink:0}
+.brand-icon svg{width:28px;height:28px}
+.brand-info{display:flex;flex-direction:column}
+h1{margin:0;font-size:30px;font-weight:800;letter-spacing:-.03em;background:linear-gradient(90deg,#38bdf8 0%,#818cf8 50%,#c084fc 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 small{font-size:12px;font-weight:500;letter-spacing:0;-webkit-text-fill-color:var(--mut);display:block;width:100%;margin-top:2px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0}
+@media(max-width:768px){.brand-banner{padding:14px 16px}.brand-left{width:100%}.bar{width:100%;justify-content:flex-start}h1{font-size:24px}}
+.ctl{font:inherit;font-size:13px;color:var(--fg);border:1px solid var(--line);background:var(--card);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:10px;padding:7px 12px;cursor:pointer}
+.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+.ctl:focus-visible,.t:focus-visible{outline:2px solid #38bdf8}
+.srch{position:relative;margin-bottom:14px}.srch input{width:100%;padding:12px 16px;cursor:text;font-size:15px;border-radius:12px}
+#res{position:absolute;z-index:30;left:0;right:0;top:100%;margin-top:6px;max-height:300px;overflow:auto;background:var(--lab);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 34px rgba(0,0,0,.3)}
+#res button{display:flex;align-items:center;width:100%;justify-content:space-between;gap:8px;padding:10px 16px;text-align:left;border:0;background:none;color:inherit;font:inherit;cursor:pointer}
+#res button:hover{background:rgba(14,165,233,.14)}
+.chip{font-size:11px;color:var(--mut);background:rgba(100,116,139,.18);border-radius:6px;padding:1px 8px}
+.hint{padding:9px 16px;font-size:12px;color:var(--mut)}
+#res .addb{color:var(--acc);border-top:1px solid var(--line)}
+.form{display:grid;gap:8px;padding:12px 16px}.form .ctl{cursor:text}.form .pri{cursor:pointer;justify-content:center}
+#sc{overflow-x:auto;padding-bottom:6px;min-height:471px}#m{min-width:1254px}
+.row{display:flex;gap:8px;margin-bottom:8px}
+.lab{position:sticky;left:0;z-index:10;width:192px;flex:none;border-radius:12px;padding:9px 12px;border:1px solid var(--line);background:var(--lab)}
+.lab .top{display:flex;align-items:center;gap:6px;font-weight:600}
+.nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bd{font-size:9px;font-weight:700;color:#fff;border-radius:4px;padding:1px 5px;letter-spacing:.04em}
+.you{background:#10b981}.pin{background:#f59e0b}
+.rm{margin-left:auto;border:0;background:none;color:var(--mut);font-size:18px;line-height:1;padding:0 4px;border-radius:4px;cursor:pointer}.rm:hover{color:#f43f5e}
+.clk{font-size:24px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums}
+.sub{font-size:11px;color:var(--mut)}
+.strip{display:grid;grid-template-columns:repeat(24,minmax(42px,1fr));gap:2px;min-width:1054px;flex:1}
+.t{height:44px;border-radius:8px;font-size:11px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1;cursor:pointer;outline:2px solid transparent;transition:background .15s,outline-color .15s}
+.w{background:rgba(16,185,129,.38)}.o{background:rgba(100,116,139,.24)}.n{background:rgba(100,116,139,.08);opacity:.6}
+.t.hl{outline-color:#38bdf8;opacity:1}.t.sel{outline-color:#f59e0b;opacity:1}.t.now{box-shadow:inset 0 0 0 2px #38bdf8;opacity:1}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 14px;font-size:12px;color:var(--mut)}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:14px;height:14px;border-radius:4px;display:inline-block}.legend .now{box-shadow:inset 0 0 0 2px #38bdf8}
+.native{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px 16px;min-height:88px;display:flex;flex-direction:column;justify-content:center;margin-bottom:18px}
+.native small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.copy{max-width:66ch;color:var(--mut);margin-bottom:18px}.copy h2{font-size:17px;color:var(--fg);margin:0 0 4px}.copy .fine{font-size:12px}.copy a{color:inherit}
+.pair{display:grid;gap:16px;justify-items:center;margin-bottom:12px}
+@media(min-width:640px){.pair{grid-template-columns:1fr 1fr}}
+.site-footer{max-width:1280px;margin:16px auto 28px;padding:14px 12px;border-top:1px dashed var(--line);font-size:13px;color:var(--mut);text-align:center}
+.ql-links{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 12px;line-height:1.6}
+.ql-links a{color:inherit;text-decoration:none;transition:color .15s}
+.ql-links a:hover{color:var(--acc);text-decoration:underline}
+.ql-links .sep{color:var(--line);user-select:none}
+.ql-copy{margin-top:8px;font-size:11px;color:var(--mut);line-height:1.5}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:60;background:#0f172a;color:#fff;border-radius:999px;padding:8px 16px;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.35);max-width:90vw}
+#toast:empty{display:none}
+</style>
+</head>
+<body>
+<div class="ad" style="width:728px;height:90px">Advertisement</div>
+<div class="wrap">
+<aside><div><div class="ad" style="width:300px;height:600px;margin:0;max-width:100%">Advertisement</div></div></aside>
+<main>
+<div class="brand-banner">
+  <div class="brand-left">
+    <div class="brand-icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="13" stroke="url(#gBrand)" stroke-width="2.5"/>
+        <ellipse cx="16" cy="16" rx="6" ry="13" stroke="url(#gBrand)" stroke-width="1.8"/>
+        <path d="M3 16h26" stroke="url(#gBrand)" stroke-width="1.8"/>
+        <path d="M16 8v8l5 3" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="gBrand" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#38bdf8"/>
+            <stop offset="1" stop-color="#c084fc"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="brand-info">
+      <h1>OmniTime<small>World Time Zone Converter &amp; Meeting Planner</small></h1>
+    </div>
+  </div>
+  <div class="bar">
+    <input id="d" type="date" class="ctl" aria-label="Date"><button id="f" class="ctl"></button><button id="th" class="ctl"></button><button id="sh" class="ctl pri">Share</button>
+  </div>
+</div>
+<input id="shu" readonly class="ctl hidden" style="width:100%;margin-bottom:10px" aria-label="Share link">
+<div class="srch"><input id="q" class="ctl" autocomplete="off" placeholder="Add a city or town" aria-label="Search city"><div id="res" class="hidden"></div></div>
+<section id="sc" aria-label="Time zone matrix"><div id="m"></div></section>
+<div class="legend"><span><i class="w"></i>Working hours</span><span><i class="o"></i>Early or late</span><span><i class="n"></i>Night</span><span><i class="now"></i>Now</span></div>
+<div class="native"><small>Sponsored</small><div style="display:flex;flex-direction:column;gap:2px;margin-top:4px"><b>Global Meeting &amp; Calendar Synchronization</b><span style="font-size:12px;color:var(--mut)">Coordinate seamless cross-timezone meetings and automatic calendar alignment for distributed teams.</span></div></div>
+<section class="copy"><h2>Global Clock: Timezones, Simplified &amp; Untangled</h2>
+<p>OmniTime is an all-in-one world clock, converter, and scheduler. Compare multiple zones at a glance, plan international meetings, and track global market hours effortlessly.</p>
+<p>Your own time zone is pinned on top and the current hour sits in the centre. Add cities with the search box, pick a date if daylight saving changes fall between you and a colleague, then look for columns where every row is green. Offsets come from your browser's time zone database, so daylight saving is handled for you. Share copies a link that restores your exact set of cities.</p>
+<p class="fine">City data © <a href="https://www.geonames.org/">GeoNames</a>, CC BY 4.0.</p></section>
+<div class="pair"><div class="ad" style="width:300px;height:250px;margin:0;max-width:100%">Advertisement</div><div class="ad" style="width:300px;height:250px;margin:0;max-width:100%">Advertisement</div></div>
+</main>
+</div>
+<div class="ad" style="width:728px;height:90px">Advertisement</div>
+<footer class="site-footer">
+<div class="ql-links">
+  <a href="Docs/terms.html">Terms of Service</a><span class="sep">|</span>
+  <a href="Docs/Privacy.html">Privacy Policy</a><span class="sep">|</span>
+</div>
+<div class="ql-copy">© 2026 OmniTime (ChronoTools.online). All rights reserved. Time calculations provided "AS IS" without warranty.</div>
+</footer>
+<div id="toast" role="status"></div>
+<script>
+const norm=s=>(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+let C=`New York|US|NY|America/New_York|40.7|-74
+Los Angeles|US|CA|America/Los_Angeles|34.1|-118.2
+Chicago|US|IL|America/Chicago|41.9|-87.6
+Houston|US|TX|America/Chicago|29.8|-95.4
+Phoenix|US|AZ|America/Phoenix|33.4|-112.1
+Philadelphia|US|PA|America/New_York|40|-75.2
+San Francisco|US|CA|America/Los_Angeles|37.8|-122.4
+Seattle|US|WA|America/Los_Angeles|47.6|-122.3
+Denver|US|CO|America/Denver|39.7|-105
+Boston|US|MA|America/New_York|42.4|-71.1
+Miami|US|FL|America/New_York|25.8|-80.2
+Atlanta|US|GA|America/New_York|33.7|-84.4
+Dallas|US|TX|America/Chicago|32.8|-96.8
+Las Vegas|US|NV|America/Los_Angeles|36.2|-115.1
+Honolulu|US|HI|Pacific/Honolulu|21.3|-157.9
+Anchorage|US|AK|America/Anchorage|61.2|-149.9
+Springfield|US|IL|America/Chicago|39.8|-89.7
+Springfield|US|MA|America/New_York|42.1|-72.6
+Springfield|US|MO|America/Chicago|37.2|-93.3
+Paris|US|TX|America/Chicago|33.7|-95.6
+Paris|France|Ile-de-France|Europe/Paris|48.9|2.4
+Portland|US|OR|America/Los_Angeles|45.5|-122.7
+Portland|US|ME|America/New_York|43.7|-70.3
+Cambridge|US|MA|America/New_York|42.4|-71.1
+Cambridge|UK|England|Europe/London|52.2|0.1
+London|UK|England|Europe/London|51.5|-0.1
+London|Canada|ON|America/Toronto|43|-81.2
+Birmingham|US|AL|America/Chicago|33.5|-86.8
+Birmingham|UK|England|Europe/London|52.5|-1.9
+Toronto|Canada|ON|America/Toronto|43.7|-79.4
+Vancouver|Canada|BC|America/Vancouver|49.3|-123.1
+Mexico City|Mexico||America/Mexico_City|19.4|-99.1
+Sao Paulo|Brazil||America/Sao_Paulo|-23.6|-46.6
+Buenos Aires|Argentina||America/Argentina/Buenos_Aires|-34.6|-58.4
+Berlin|Germany||Europe/Berlin|52.5|13.4
+Madrid|Spain||Europe/Madrid|40.4|-3.7
+Rome|Italy||Europe/Rome|41.9|12.5
+Amsterdam|Netherlands||Europe/Amsterdam|52.4|4.9
+Dublin|Ireland||Europe/Dublin|53.3|-6.3
+Lisbon|Portugal||Europe/Lisbon|38.7|-9.1
+Zurich|Switzerland||Europe/Zurich|47.4|8.5
+Vienna|Austria||Europe/Vienna|48.2|16.4
+Stockholm|Sweden||Europe/Stockholm|59.3|18.1
+Warsaw|Poland||Europe/Warsaw|52.2|21
+Athens|Greece||Europe/Athens|38|23.7
+Istanbul|Turkey||Europe/Istanbul|41|29
+Moscow|Russia||Europe/Moscow|55.8|37.6
+Kyiv|Ukraine||Europe/Kyiv|50.5|30.5
+Manchester|UK|England|Europe/London|53.5|-2.2
+Edinburgh|UK|Scotland|Europe/London|55.9|-3.2
+Brussels|Belgium||Europe/Brussels|50.8|4.4
+Prague|Czechia||Europe/Prague|50.1|14.4
+Oslo|Norway||Europe/Oslo|59.9|10.8
+Helsinki|Finland||Europe/Helsinki|60.2|24.9
+Beijing|China||Asia/Shanghai|39.9|116.4
+Shanghai|China||Asia/Shanghai|31.2|121.5
+Shenzhen|China||Asia/Shanghai|22.5|114.1
+Guangzhou|China||Asia/Shanghai|23.1|113.3
+Chengdu|China||Asia/Shanghai|30.7|104.1
+Hong Kong|China||Asia/Hong_Kong|22.3|114.2
+Taipei|Taiwan||Asia/Taipei|25|121.5
+Tokyo|Japan||Asia/Tokyo|35.7|139.7
+Osaka|Japan||Asia/Tokyo|34.7|135.5
+Kyoto|Japan||Asia/Tokyo|35|135.8
+Nagoya|Japan||Asia/Tokyo|35.2|136.9
+Sapporo|Japan||Asia/Tokyo|43.1|141.4
+Fukuoka|Japan||Asia/Tokyo|33.6|130.4
+New Delhi|India||Asia/Kolkata|28.6|77.2
+Mumbai|India||Asia/Kolkata|19.1|72.9
+Chennai|India||Asia/Kolkata|13.1|80.3
+Bengaluru|India||Asia/Kolkata|13|77.6
+Kolkata|India||Asia/Kolkata|22.6|88.4
+Hyderabad|India||Asia/Kolkata|17.4|78.5
+Dubai|UAE||Asia/Dubai|25.2|55.3
+Singapore|Singapore||Asia/Singapore|1.4|103.8
+Sydney|Australia|NSW|Australia/Sydney|-33.9|151.2
+Melbourne|Australia|VIC|Australia/Melbourne|-37.8|145
+Auckland|New Zealand||Pacific/Auckland|-36.8|174.8
+Seoul|South Korea||Asia/Seoul|37.6|127
+Bangkok|Thailand||Asia/Bangkok|13.8|100.5
+Johannesburg|South Africa||Africa/Johannesburg|-26.2|28
+Cairo|Egypt||Africa/Cairo|30|31.2
+Lagos|Nigeria||Africa/Lagos|6.5|3.4
+Nairobi|Kenya||Africa/Nairobi|-1.3|36.8`.split("\n").map(s=>{const a=s.split("|");return{n:a[0],c:a[1],r:a[2],z:a[3],la:+a[4],lo:+a[5],l:norm(a[0]),rl:norm(a[2]),cl:norm(a[1])}});
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const LS={g(k){try{return localStorage.getItem(k)}catch{return null}},s(k,v){try{localStorage.setItem(k,v)}catch{}}};
+const ok=z=>{try{new Intl.DateTimeFormat("en",{timeZone:z});return true}catch{return false}};
+const ALIAS={"Asia/Calcutta":"Asia/Kolkata","Asia/Saigon":"Asia/Ho_Chi_Minh","Asia/Katmandu":"Asia/Kathmandu","Asia/Rangoon":"Asia/Yangon","Asia/Dacca":"Asia/Dhaka","Europe/Kiev":"Europe/Kyiv"};
+const LZ0=Intl.DateTimeFormat().resolvedOptions().timeZone,LZ=ALIAS[LZ0]||LZ0;
+const ZONES=[...new Set((Intl.supportedValuesOf?Intl.supportedValuesOf("timeZone"):[]).map(z=>ALIAS[z]||z))];
+const nm=z=>z.split("/").pop().replace(/_/g," ");
+const FC={};
+const parts=(z,d)=>{const f=FC[z]||(FC[z]=new Intl.DateTimeFormat("en-US",{timeZone:z,hourCycle:"h23",hour:"numeric",minute:"numeric",month:"short",day:"numeric",weekday:"short",timeZoneName:"shortOffset"}));const p={};f.formatToParts(d).forEach(x=>p[x.type]=x.value);p.h=+p.hour%24;p.m=+p.minute;p.off=(p.timeZoneName||"").replace(/^GMT(\+0)?$/,"UTC").replace("GMT","UTC");if(p.off==="UTC+0"||p.off==="UTC-0"||p.off==="UTC+00:00"||p.off==="UTC-00:00")p.off="UTC";return p};
+let h12=LS.g("ot_h12")!=="0";
+const pad=n=>String(n).padStart(2,"0");
+const tl=(h,m)=>h12?(h%12||12)+(m?":"+pad(m):"")+(h<12?"a":"p"):pad(h)+(m?":"+pad(m):"");
+const ft=(h,m)=>h12?(h%12||12)+":"+pad(m)+(h<12?" AM":" PM"):pad(h)+":"+pad(m);
+const hav=(a,b,c,d)=>{const r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 12742*Math.asin(Math.sqrt(x))};
+let me;const setMe=()=>{me=C.find(c=>c.z===LZ)||{la:30,lo:-new Date().getTimezoneOffset()/4}};setMe();
+const DEF=[["New York","America/New_York"],["London","Europe/London"],["Beijing","Asia/Shanghai"],["Tokyo","Asia/Tokyo"],["New Delhi","Asia/Kolkata"]];
+const Q=new URLSearchParams(location.search);
+const dec=s=>s.split(";").map(x=>{const i=x.lastIndexOf("@");return{n:x.slice(0,i),z:x.slice(i+1)}}).filter(r=>r.n&&ok(r.z));
+let saved=null;try{saved=JSON.parse(LS.g("ot_rows"))}catch{}
+let others=Q.get("v")?dec(Q.get("v")):(Array.isArray(saved)&&saved.length?saved.filter(r=>r&&r.n&&ok(r.z)):DEF.filter(d=>d[1]!==LZ).map(d=>({n:d[0],z:d[1]})));
+const parse=a=>a.map(x=>({n:x[0],c:x[1],r:x[2],z:x[3],la:x[4],lo:x[5],l:norm(x[0]),rl:norm(x[2]),cl:norm(x[1])}));
+const loading={};let loaded2=false;
+const ensure=n=>loading[n]||(loading[n]=(async()=>{
+ if(n===2)await ensure(1);
+ try{const r=await fetch(n===1?"cities15000.json":"cities500.json");if(!r.ok)throw 0;const d=parse(await r.json());C=n===1?d:C.concat(d);if(n===2)loaded2=true;setMe();
+  if(!$("#zi")&&$("#q").value.trim())$("#q").dispatchEvent(new Event("input"))}catch(e){loading[n]=null}
+})());
+const find=n=>{const l=norm(n);let list=C.filter(c=>c.l===l);if(!list.length)list=C.filter(c=>c.rl===l);if(!list.length)return null;const best=list.sort((x,y)=>hav(me.la,me.lo,x.la,x.lo)-hav(me.la,me.lo,y.la,y.lo))[0];if(best.l===l)return best;return{n:best.r,z:best.z}};
+const pin=(n,z)=>{n=n.slice(0,60);others=others.filter(r=>!(r.n===n&&r.z===z));others.unshift({n,z,p:1});render()};
+async function urlPin(){const city=Q.get("city"),zone=Q.get("zone");if(!city)return;
+ if(zone){if(ok(zone))pin(city,zone);else toast("Unknown time zone in link: "+zone.slice(0,40),7000);return}
+ await ensure(1);let f=find(city);if(!f){await ensure(2);f=find(city)}
+ if(f)pin(f.n,f.z);else toast("Place not found. Search for it and add it with a time zone.",7000)}
+const rows=()=>[{n:nm(LZ),z:LZ,you:1},...others];
+const t0=new Date();let H0=t0.getHours(),base,sel=null,todayMode=true;const setBase=(y,mo,d)=>{base=new Date(y,mo,d,H0-12)};setBase(t0.getFullYear(),t0.getMonth(),t0.getDate());
+const save=()=>LS.s("ot_rows",JSON.stringify(others.map(({n,z})=>({n,z}))));
+function render(){
+ const now=new Date(),ref=sel!==null?new Date(base.getTime()+sel*36e5):now;
+ $("#m").innerHTML=rows().map((r,i)=>{
+  const p=parts(r.z,ref);
+  const strip=Array.from({length:24},(_,c)=>{const q=parts(r.z,new Date(base.getTime()+c*36e5));
+   const k=q.h>=9&&q.h<17?"w":q.h>=6&&q.h<21?"o":"n";
+   return `<div class="t ${k}${c===sel?" sel":""}${c===12&&todayMode?" now":""}" tabindex="0" data-c="${c}">${q.h===0?"<b>"+q.month+" "+q.day+"</b>":tl(q.h,q.m)}</div>`}).join("");
+  const badge=r.you?'<span class="bd you">YOU</span>':r.p?'<span class="bd pin">PINNED</span>':"";
+  const x=i?`<button data-a="x" data-i="${i-1}" aria-label="Remove ${esc(r.n)}" class="rm">×</button>`:"";
+  return `<div class="row"><div class="lab"><div class="top"><span class="nm">${esc(r.n)}</span>${badge}${x}</div><div class="clk">${ft(p.h,p.m)}</div><div class="sub">${p.weekday} ${p.month} ${p.day} · ${esc(p.off)}</div></div><div class="strip">${strip}</div></div>`}).join("");
+}
+function center(){const b=$("#sc"),t=$("#m").querySelector('[data-c="12"]'),l=$("#m").querySelector(".lab");if(!t||!l)return;
+ const lw=l.offsetWidth+8;b.scrollLeft+=t.getBoundingClientRect().left+t.offsetWidth/2-(b.getBoundingClientRect().left+lw+(b.clientWidth-lw)/2)}
+const m=$("#m");
+m.addEventListener("mouseover",e=>{const t=e.target.closest(".t");if(!t)return;m.querySelectorAll(".hl").forEach(x=>x.classList.remove("hl"));m.querySelectorAll(`[data-c="${t.dataset.c}"]`).forEach(x=>x.classList.add("hl"))});
+m.addEventListener("mouseleave",()=>m.querySelectorAll(".hl").forEach(x=>x.classList.remove("hl")));
+m.addEventListener("click",e=>{const t=e.target.closest(".t");if(t){const c=+t.dataset.c;sel=sel===c?null:c;render();return}
+ const b=e.target.closest("button");if(!b)return;const i=+b.dataset.i;
+ if(b.dataset.a==="x")others.splice(i,1);else return;
+ save();render()});
+m.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("t")){e.preventDefault();e.target.click()}});
+let cur=[];
+$("#q").addEventListener("input",()=>{
+ ensure(2);
+ const raw=$("#q").value.trim(),v=norm(raw),box=$("#res");
+ if(!raw){box.classList.add("hidden");return}
+ const[a,b]=v.split(",").map(s=>s.trim());
+ const ex=c=>c.l===a,sw=c=>c.l.startsWith(a),inc=c=>a.length>2&&c.l.includes(a);
+ const rex=c=>c.rl===a||c.cl===a,rsw=c=>c.rl.startsWith(a)||c.cl.startsWith(a),rinc=c=>a.length>2&&(c.rl.includes(a)||c.cl.includes(a));
+ cur=C.filter(c=>sw(c)||inc(c)||rex(c)||rsw(c)||rinc(c)).filter(c=>!b||norm(c.r+" "+c.c).includes(b));
+ const regMatch=!b&&C.find(c=>c.rl===a);
+ let regPlace=null;
+ if(regMatch&&!cur.some(c=>c.l===a)){
+  regPlace={n:regMatch.r,c:regMatch.c,r:"Region",z:regMatch.z,la:regMatch.la,lo:regMatch.lo,l:a,rl:a,cl:regMatch.cl};
+ }
+ cur.sort((x,y)=>{
+  const rx=ex(x)?10:sw(x)?8:inc(x)?6:rex(x)?5:rsw(x)?4:2;
+  const ry=ex(y)?10:sw(y)?8:inc(y)?6:rex(y)?5:rsw(y)?4:2;
+  return(ry-rx)||(hav(me.la,me.lo,x.la,x.lo)-hav(me.la,me.lo,y.la,y.lo));
+ });
+ if(regPlace)cur.unshift(regPlace);
+ cur=cur.slice(0,12);let head="";
+ if(!cur.length){
+  const Z=ZONES.filter(z=>z.toLowerCase().replace(/_/g," ").includes(a)).slice(0,8);
+  if(Z.length){cur=Z.map(z=>({n:nm(z),c:"",r:z,z}));head='<div class="hint">No city match. Time zones that match:</div>'}
+ }
+ else if(cur.filter(c=>c.n===cur[0].n).length>1)head='<div class="hint">Several places match. Nearest to you first:</div>';
+ box.innerHTML=head+(cur.length?cur.map((c,i)=>`<button data-k="${i}"><span>${esc(c.n)}</span><span class="chip">${esc((c.r?c.r+(c.c?", ":""):"")+c.c)}</span></button>`).join(""):'<div class="hint">No match yet.'+(!loaded2?' (Loading complete world city database...)':'')+(location.protocol==="file:"?'<br><small style="font-size:11px;opacity:0.8">Note: Local file:// protocol blocks external JSON fetch. Run via a local web server or hosted HTTP/HTTPS to search the full 180,000+ city database.</small>':"")+'</div>')+(v.length>1?'<button data-k="add" class="addb">Not listed? Add it with a time zone</button>':"");
+ box.classList.remove("hidden")});
+$("#res").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.k==="add"){addForm();return}if(b.id==="za"){addZone();return}const c=cur[+b.dataset.k];
+ if(!others.some(r=>r.n===c.n&&r.z===c.z)&&!(c.z===LZ&&c.n===nm(LZ)))others.unshift({n:c.n,z:c.z});
+ $("#q").value="";$("#res").classList.add("hidden");save();render()});
+document.addEventListener("click",e=>{if(e.target.isConnected&&!e.target.closest("#q,#res"))$("#res").classList.add("hidden")});
+const toast=(s,ms=2500)=>{$("#toast").textContent=s;setTimeout(()=>$("#toast").textContent="",ms)};
+document.body.insertAdjacentHTML("beforeend",'<datalist id="zl">'+ZONES.map(z=>`<option value="${z}">`).join("")+"</datalist>");
+function addForm(){const n=$("#q").value.trim().slice(0,60);
+ $("#res").innerHTML=`<div class="form"><div>Time zone for <b>${esc(n)}</b></div><input id="zi" class="ctl" list="zl" placeholder="Type to filter, e.g. Asia/Kolkata"><button id="za" class="ctl pri">Add</button><span id="ze" class="hint" style="padding:0"></span></div>`;$("#zi").focus()}
+function addZone(){const z=$("#zi").value.trim(),n=$("#q").value.trim().slice(0,60);
+ if(!n||!z||!ok(z)){$("#ze").textContent="Pick a valid time zone from the list.";return}
+ others.unshift({n,z});$("#q").value="";$("#res").classList.add("hidden");save();render()}
+$("#q").addEventListener("focus",()=>ensure(2));
+addEventListener("load",()=>{ensure(1).then(()=>ensure(2))});
+$("#sh").onclick=async()=>{const u=location.origin+location.pathname+"?v="+encodeURIComponent(others.map(r=>r.n+"@"+r.z).join(";")),i=$("#shu");
+ i.value=u;try{await navigator.clipboard.writeText(u);i.classList.add("hidden");toast("Link copied")}catch{i.classList.remove("hidden");i.select();toast("Copy the link below")}};
+$("#f").onclick=()=>{h12=!h12;LS.s("ot_h12",h12?"1":"0");render();lbl()};
+const mq=matchMedia("(prefers-color-scheme: dark)"),TN={system:"System default",light:"Light",dark:"Dark"};
+let theme=TN[LS.g("ot_theme")]?LS.g("ot_theme"):"system";
+const lbl=()=>{$("#f").textContent=h12?"12-hour":"24-hour";$("#th").textContent=TN[theme]};
+const applyTheme=()=>{document.documentElement.classList.toggle("dark",theme==="dark"||(theme==="system"&&mq.matches));lbl()};
+applyTheme();
+if(mq.addEventListener)mq.addEventListener("change",()=>{if(theme==="system")applyTheme()});
+$("#th").onclick=()=>{theme={system:"light",light:"dark",dark:"system"}[theme];LS.s("ot_theme",theme);applyTheme()};
+$("#d").value=`${t0.getFullYear()}-${pad(t0.getMonth()+1)}-${pad(t0.getDate())}`;
+$("#d").onchange=e=>{const p=e.target.value.split("-").map(Number);if(p.length===3&&p[0]){setBase(p[0],p[1]-1,p[2]);todayMode=p[0]===t0.getFullYear()&&p[1]-1===t0.getMonth()&&p[2]===t0.getDate();sel=null;render();center()}};
+render();center();urlPin();addEventListener("load",center);let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(center,150)});
+setInterval(()=>{const n=new Date();if(todayMode&&n.getHours()!==H0){H0=n.getHours();setBase(n.getFullYear(),n.getMonth(),n.getDate());render();center()}else if(sel===null&&!m.querySelector(".hl"))render()},30000);
+function openCMP(){if(window.googlefc&&window.googlefc.callbackQueue){window.googlefc.showRevocationMessage()}else if(window.__tcfapi){window.__tcfapi("displayConsentUi",2,function(){})}else{location.href="Terms and Conditions/privacy.html#cookies"}}
+</script>
+</body>
+</html>

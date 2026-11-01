@@ -27,7 +27,7 @@ jobs:
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # This extracts ONLY your website files and strips away the folder name
+          # This specifically uses only the contents inside public_html
           path: './public_html' 
 
       - name: Deploy to GitHub Pages
